@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificate Generator</title>
+    <style>
+        body { text-align: center; font-family: Arial; padding: 50px; background-color: #f0f8ff; }
+        input, button { padding: 10px; margin: 10px; font-size: 16px; }
+        button { cursor: pointer; background-color: #4CAF50; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <h1>🎓 Generate Your Certificate 🎓</h1>
+    <input type="text" id="name" placeholder="Enter Your Name"><br>
+    <button onclick="generate()">Generate Certificate</button><br><br>
+    <canvas id="cert" width="1000" height="700"></canvas>
+
+    <script>
+    function generate() {
+        var canvas = document.getElementById("cert");
+        var ctx = canvas.getContext("2d");
+
+        var img = new Image();
+        img.src = "certificate_template.png";
+        img.onload = function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            var name = document.getElementById("name").value;
+            ctx.font = "50px Arial";
+            ctx.fillStyle = "black";
+            ctx.fillText(name, 350, 490); // Adjust x, y to match your line
+
+            var link = document.createElement('a');
+            link.download = 'certificate.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    }
+    </script>
+</body>
+</html>
